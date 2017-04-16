@@ -1,0 +1,6 @@
+[submodule "lib/idris-hrTime"]
+	path = lib/idris-hrTime
+	url = https://github.com/blau-io/idris-hrTime.git
+[submodule "lib/IdrisScript"]
+	path = lib/IdrisScript
+	url = https://github.com/idris-hackers/IdrisScript.git

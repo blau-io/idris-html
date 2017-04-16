@@ -1,0 +1,19 @@
+package html
+
+brief      = "An Idris library to interact with HTML"
+version    = 0.1.0
+readme     = README.md
+license    = Apache-2.0
+author     = Pierre Beaucamp
+maintainer = The blau.io contributors
+homepage   = https://github.com/blau-io/idris-html
+sourceloc  = https://github.com/blau-io/idris-html.git
+bugtracker = https://github.com/blau-io/idris-html/issues
+
+sourcedir = src
+pkgs      = idrisscript, hrTime
+
+modules = API.Web.HTML.Document
+        , API.Web.HTML.HTMLCanvasElement
+        , API.Web.HTML.HTMLElement
+        , API.Web.HTML.Window
