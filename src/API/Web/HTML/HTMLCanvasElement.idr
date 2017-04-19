@@ -14,6 +14,7 @@
 
 module API.Web.HTML.HTMLCanvasElement
 
+import API.WebGL.Context
 import IdrisScript
 
 %access public export
@@ -31,9 +32,21 @@ data RenderingContext : Type where
 record HTMLCanvasElement where
   constructor New
   width, height : Int
-  localName : String
+  localName     : String
+  ||| self is a non standard field which is used to facilitate integration with
+  ||| JavaScript
+  self : Ptr
 
--- getContext : HTMLCanvasElement -> String -> Maybe RenderingContext
+getContext : HTMLCanvasElement -> String -> JS_IO $ Maybe RenderingContext
+getContext (New _ _ _ self) ctxId = let
+    ref = jscall "%0.getContext(%1)" (JSRef -> String -> JS_IO JSRef) self ctxId
+  in
+    -- TODO: This would be a good use for dependent types
+    case ctxId of
+      "webgl" => case !(webGlRenderingContextFromPointer !ref) of
+        Nothing        => pure Nothing
+        (Just context) => pure $ Just $ FromWebGLRenderingContext context
+      _       => pure Nothing
 
 ||| htmlCanvasElementFromPointer is a helper function for easily creating
 ||| HTMLCanvasElements from JavaScript references.
@@ -46,7 +59,7 @@ htmlCanvasElementFromPointer ref = case !maybeLocalName of
       Nothing      => pure Nothing
       (Just width) => case !maybeHeight of
         Nothing       => pure Nothing
-        (Just height) => pure $ Just $ New width height localName
+        (Just height) => pure $ Just $ New width height localName ref
   where
     maybeLocalName : JS_IO $ Maybe String
     maybeLocalName = let

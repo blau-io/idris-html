@@ -1,7 +1,7 @@
 .PHONY: docs
 
 default:
-	idris -p idrisscript -p hrTime -i src
+	idris -p idrisscript -p hrTime -p webgl -i src
 
 deps:
 	cd lib/IdrisScript;               \
@@ -9,6 +9,9 @@ deps:
 	cd -;                             \
 	cd lib/idris-hrTime;              \
 	idris --install hrTime.ipkg;      \
+	cd -;                             \
+	cd lib/idris-webgl;               \
+	idris --install webgl.ipkg;       \
 	cd -
 
 docs:

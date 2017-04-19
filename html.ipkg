@@ -11,7 +11,7 @@ sourceloc  = https://github.com/blau-io/idris-html.git
 bugtracker = https://github.com/blau-io/idris-html/issues
 
 sourcedir = src
-pkgs      = idrisscript, hrTime
+pkgs      = idrisscript, hrTime, webgl
 
 modules = API.Web.HTML.Document
         , API.Web.HTML.HTMLCanvasElement
