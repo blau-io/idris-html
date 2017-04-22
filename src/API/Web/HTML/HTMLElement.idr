@@ -28,7 +28,7 @@ import IdrisScript
 ||| https://html.spec.whatwg.org/#htmlelement
 data HTMLElement : Type where
   FromHTMLCanvasElement : HTMLCanvasElement    -> HTMLElement
-  New                   : (localName : String) -> HTMLElement
+  New                   : (localName : String) -> (self : JSRef)-> HTMLElement
 
 ||| htmlElementFromPointer is a helper function for easily creating HTMLElements
 ||| from JavaScript references.
@@ -41,7 +41,7 @@ htmlElementFromPointer ref = case !maybeLocalName of
       "canvas" => case !(htmlCanvasElementFromPointer ref) of
         Nothing       => pure Nothing
         (Just canvas) => pure $ Just $ FromHTMLCanvasElement canvas
-      _        => pure $ Just $ New localName
+      _        => pure $ Just $ New localName ref
   where
     maybeLocalName : JS_IO $ Maybe String
     maybeLocalName = let
