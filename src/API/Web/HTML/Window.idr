@@ -34,7 +34,7 @@ record Window where
 ||| DOMHighResTimeStamp, which indicates the current time for when
 ||| requestAnimationFrame starts to fire callbacks.
 FrameRequestCallback : Type
-FrameRequestCallback = DOMHighResTimeStamp -> JS_IO JSRef
+FrameRequestCallback = DOMHighResTimeStamp -> JS_IO ()
 
 ||| RequestAnimationFrame tells the browser that you wish to perform an
 ||| animation and requests that the browser call a specified function to update
