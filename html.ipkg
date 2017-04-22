@@ -16,4 +16,5 @@ pkgs      = idrisscript, hrTime, webgl
 modules = API.Web.HTML.Document
         , API.Web.HTML.HTMLCanvasElement
         , API.Web.HTML.HTMLElement
+        , API.Web.HTML.HTMLScriptElement
         , API.Web.HTML.Window
