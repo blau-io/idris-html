@@ -15,6 +15,7 @@
 module API.Web.HTML.HTMLElement
 
 import API.Web.HTML.HTMLCanvasElement
+import API.Web.HTML.HTMLScriptElement
 import IdrisScript
 
 %access public export
@@ -28,6 +29,7 @@ import IdrisScript
 ||| https://html.spec.whatwg.org/#htmlelement
 data HTMLElement : Type where
   FromHTMLCanvasElement : HTMLCanvasElement    -> HTMLElement
+  FromHTMLScriptElement     : HTMLScriptElement    -> HTMLElement
   New                   : (localName : String) -> (self : JSRef)-> HTMLElement
 
 ||| htmlElementFromPointer is a helper function for easily creating HTMLElements
@@ -41,6 +43,9 @@ htmlElementFromPointer ref = case !maybeLocalName of
       "canvas" => case !(htmlCanvasElementFromPointer ref) of
         Nothing       => pure Nothing
         (Just canvas) => pure $ Just $ FromHTMLCanvasElement canvas
+      "script" => case !(htmlScriptElementFromPointer ref) of
+        Nothing       => pure Nothing
+        (Just script) => pure $ Just $ FromHTMLScriptElement script
       _        => pure $ Just $ New localName ref
   where
     maybeLocalName : JS_IO $ Maybe String
